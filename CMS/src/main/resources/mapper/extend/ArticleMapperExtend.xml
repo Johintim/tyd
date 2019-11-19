@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.apps.tyd.dao.extend.ArticleMapperExtend">
+  <resultMap type="com.briup.apps.tyd.bean.extend.ArticleExtend" id="ArticleExtend">
+  	<id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="publish_time" jdbcType="BIGINT" property="publishTime" />
+    <result column="read_times" jdbcType="BIGINT" property="readTimes" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="thump_up" jdbcType="BIGINT" property="thumpUp" />
+    <result column="thump_down" jdbcType="BIGINT" property="thumpDown" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <association property="category" javaType="com.briup.apps.tyd.bean.Category">
+    	<id column="id" jdbcType="BIGINT" property="id" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="description" jdbcType="VARCHAR" property="description" />
+	    <result column="no" jdbcType="INTEGER" property="no" />
+	    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    </association>
+  </resultMap>
+   <select id="selectAll" resultMap="ArticleExtend">
+   select 
+   		a.*,b.*  
+   from
+    	cms_article a,cms_category b 
+   where
+   	 	a.category_id=b.id;
+   </select>
+   
+   <select id="selectById" parameterType="long" resultMap="ArticleExtend">
+   SELECT
+   		*
+   FROM
+   		cms_article
+   WHERE
+   		id = #{id}
+   </select>
+   
+</mapper>
